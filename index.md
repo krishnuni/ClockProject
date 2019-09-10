@@ -1,37 +1,116 @@
-## Welcome to GitHub Pages
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-You can use the [editor on GitHub](https://github.com/krishnuni/ClockProject/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+        <title>Vai's Clock</title>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <div class="container">
+            <h1 style="text-align: center;">Light or Dark Mode</h1>
+            <input class="container_toggle" type="checkbox" id="switch" name="mode">
+            <label for="switch">Toggle</label>
+        </div>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stopwatch</title>
+  <link rel="stylesheet" href="css/style2.css" />
+</head>
+<script type="text/javascript">
 
-### Markdown
+    function init () {
+        displayTime = document.createTextNode("");
+        document.getElementById("clock").appendChild (displayTime);
+    }
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+    function updateClock(){
+        let timeNow = new Date ();
+        // extracting time from the Date object
+        let hoursNow = timeNow.getHours ();
+        let minutesNow = timeNow.getMinutes ();
+        let secondsNow = timeNow.getSeconds ();
+        let milliSecondsNow = timeNow.getMilliseconds ();
+        // needs to be in format HH:MM:SS XX - where XX is AM or PM
+        hoursNow = (hoursNow < 10 ? "0" : "") + hoursNow;
+        minutesNow = (minutesNow < 10 ? "0" : "") + minutesNow;
+        secondsNow = (secondsNow < 10 ? "0" : "") + secondsNow;
+        milliSecondsNow = (milliSecondsNow < 1 ? "000" : (milliSecondsNow < 10 ? "00" : (milliSecondsNow < 100 ? "0" : ''))) + milliSecondsNow;
+        //converting clock into 12 hour mode
+        let dayTime = (hoursNow < 12) ? "AM" : "PM";
+        hoursNow = (hoursNow > 12) ? hoursNow - 12 : hoursNow;
+        hoursNow = (hoursNow === 00) ? 12 : hoursNow;
+        let timeNowString = hoursNow + ":" + minutesNow + ":" + secondsNow + ":" + milliSecondsNow + dayTime;
+        
 
-```markdown
-Syntax highlighted code block
+        document.getElementById("clock").firstChild.nodeValue = timeNowString;
+    }
+</script>
+<body>
+<body onload="updateClock(); setInterval('updateClock()', 1 )">
+                <h2 style="text-align:center; font-family: 'Futura', Trebuchet MS, Arial, sans-serif; font-size: 30px; font-weight: bolder;">Clock</h2>
+            <h1 style="font-family: 'Futura', Trebuchet MS, Arial, sans-serif" >  
+            <div style="clear: both;"> </div>
+            <div style="width: 50em; text-align: center; margin: 0px auto;">
+            <div style="font-size: 132px"
+            <span id="clock">&nbsp;</span>
+            </h1>
+            <h2 style="text-align:center; font-family: 'Futura', Trebuchet MS, Arial, sans-serif; font-size: 30px; font-weight: bolder;">Countdown</h2>
+    
+            <h1 id="countdown" style="font-family: 'Futura', Trebuchet MS, Arial, sans-serif; text-align: center; font-size: 132px; margin: 0px"></h1>
+<!--Coundown-->
+<script>
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
+do {
+  deadline = new Date(prompt("Enter Deadline date: e.g. Sep 5, 2019, 15:27:25"));
+  if (deadline.toString() === "Invalid Date"){
+    alert("Sorry, that format is not recognised.")
+  } 
+} while (deadline.toString() === "Invalid Date");
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+let countDownDate = new Date(deadline).getTime();
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
+// updates count every second
+let update = setInterval(function() {
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/krishnuni/ClockProject/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+  let now = new Date().getTime();
 
-### Support or Contact
+  let distance = countDownDate - now;
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+  let daysCount = Math.floor(distance / (1000 * 60 * 60 * 24));
+  let hoursCount = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutesCount = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  let secondsCount = Math.floor((distance % (1000 * 60)) / 1000);
+
+  //id="countdown" displays result
+  document.getElementById("countdown").innerHTML =  daysCount + "d " + hoursCount + "h "
+  + minutesCount + "m " + secondsCount + "s ";
+
+  //expiry
+  if (distance < 0) {
+    clearInterval(update);
+    document.getElementById("countdown").innerHTML = "Countdown reached";
+    alert("Countdown reached!")
+  }
+})
+</script>
+               
+               <h2 style="text-align:center; font-family: 'Futura', Trebuchet MS, Arial, sans-serif; font-size: 30px; font-weight: bolder; margin: 10px">Stopwatch</h2>             
+         
+         <script  src="function.js"></script>
+  <h1 style="margin: 0px" id="timer">00 : 00 . 000</h1>
+  <div>
+    <button id="toggle">Start</button>
+    <button id="reset">Reset</button>
+  </div>
+  <script src="js/stopwatch.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
